@@ -4,25 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExceptionHandling
+namespace events_and_delegates
 {
-    class Program
+    public delegate string MyDel(string str);
+
+    class EventProgram
     {
+        event MyDel MyEvent;
+
+        public EventProgram()
+        {
+            this.MyEvent += new MyDel(this.WelcomeUser);
+        }
+
+        public string WelcomeUser(string username)
+        {
+            return "Welcome " + username;
+        }
+
         static void Main(string[] args)
         {
-            try
-            {
-                int a = 10;
-                int b = 0;
-                int x = a / b;
-            }
-            catch (Exception e) { Console.WriteLine(e); }
-            finally
-            {
-                Console.WriteLine("finally block executed");
-            }
-            Console.WriteLine("Rest of code");
-            Console.ReadKey();
+            EventProgram obj1 = new EventProgram();
+            string result = obj1.MyEvent("rajesh");
+            Console.WriteLine(result);
         }
+
     }
 }
